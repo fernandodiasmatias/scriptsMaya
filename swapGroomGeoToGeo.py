@@ -1,3 +1,9 @@
+# swapGroomGeoToGeo
+# the operation is summarized in selecting two geometries one with Yeti Groom and
+# another one with identical geometry but without yeti Gromm and running the script
+#
+# script by Fernando Dias Matias
+
 import pymel.core as pmc
 import maya.cmds as cmds
 import sys
