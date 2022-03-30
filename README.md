@@ -1,2 +1,3 @@
-# scriptsMaya
-Scripts Maya
+# scriptsMaya #
+
+Scripts for Maya 
