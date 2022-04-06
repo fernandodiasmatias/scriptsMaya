@@ -1,8 +1,14 @@
-# swapGroomGeoToGeo
-# the operation is summarized in selecting two geometries one with Yeti Groom and
-# another one with identical geometry but without yeti Gromm and running the script
-#
-# script by Fernando Dias Matias
+# swapGroomGeoToGeo #########################################################################
+#																							#
+# the operation is summarized in selecting two geometries one with Yeti Groom and			#
+# another one with identical geometry but without yeti Gromm and running the script.		#
+#																							#
+# The main motivation for the script is to facilitate the grooming process for assets		#
+# that needed a simulation on their geometry and need to have original yeti groom restored	#
+#																							#
+#script by Fernando Dias Matias																#
+#																							#
+#############################################################################################
 
 import pymel.core as pmc
 import maya.cmds as cmds
