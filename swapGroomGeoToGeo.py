@@ -12,10 +12,6 @@
 
 import pymel.core as pmc
 import maya.cmds as cmds
-import sys
-
-import pymel.core as pmc
-import maya.cmds as cmds
 from sys import exit
 
 class swapGroomGeoToGeo():
