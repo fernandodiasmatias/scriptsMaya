@@ -14,7 +14,7 @@ import pymel.core as pmc
 import maya.cmds as cmds
 from sys import exit
 
-class swapGroomGeoToGeo():
+class swapGroomGeoToGeo:
 
     def __init__(self):
 
@@ -23,7 +23,8 @@ class swapGroomGeoToGeo():
         self.geoShape = None
         self.geoShape_reference = None
         self.organizeObj()
-        self.listCollisionGRM = []
+        self.listCollisionGRM = self.listCollisionOnGRM()
+        self.swapGeo()
         
         
     def validateItem(self):
@@ -31,7 +32,6 @@ class swapGroomGeoToGeo():
         hasYeti = []
 
         if len(self.selectList) !=2 or self.selectList == None :
-            pmc.warning("Select at least 2 objects to link")
             return False
         
         item1 = pmc.listRelatives(self.selectList[0], shapes=True)[0]
@@ -94,24 +94,29 @@ class swapGroomGeoToGeo():
             pmc.warning("No Yeti Groom found on: " + self.originalShape)
 
     def listCollisionOnGRM(self):
+        self.listCollisionGRM = []
         try:
-            self.listCollisionGRM = cmds.connectionInfo(self.originalShape + ".worldMesh",dfs=True)
+            for item in cmds.connectionInfo(self.originalShape + ".worldMesh",dfs=True):
+                if item.find('collisionGeometry')!= -1:
+                    self.listCollisionGRM.append(item)
+                    
             return self.listCollisionGRM
         except:
-            pmc.warning("No Yeti Groom found on: " + self.originalShape)
+            pmc.warning("No Yeti Groom found on: " + str(self.originalShape))
+            
 
-swGrm = swapGroomGeoToGeo()
-
-if swGrm.validateItem():
-    if swGrm.disconnectObj():
-        pmc.warning("Disconnected: " + swGrm.originalShape)
-        if swGrm.connectObj():
-            pmc.warning("Connection successful")
-            swGrm.swapGeometryOnGeoCollision()
-            swGrm.swapGeometryOnGroom()
+    def swapGeo(self):
+        if self.validateItem():
+            if self.disconnectObj():
+                pmc.warning("Disconnected: " + self.originalShape)
+                if self.connectObj():
+                    pmc.warning("Connection successful")
+                    self.swapGeometryOnGeoCollision()
+                    self.swapGeometryOnGroom()
+                    pmc.warning("Swap Geometry successful")
+                else:
+                    pmc.warning("Connection failed")
+            else:
+                pmc.warning("Disconnection failed")
         else:
-            pmc.warning("Connection failed")
-    else:
-        pmc.warning("Disconnection failed")
-else:
-    pmc.warning("Try again by selecting 2 objects, one with Yeti Groom and another one with identical geometry but without yeti Gromm")
+            pmc.warning("Please select 2 valid objects: One with Yeti Groom and another one with identical geometry but without yeti Gromm")
